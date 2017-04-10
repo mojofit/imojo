@@ -1,0 +1,33 @@
+# Specifies files to intentionally ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+.idea/
+temp/
+node_modules/
+platforms/
+plugins/
+resources/
+typings/
+*.iml
+
+*~
+*.sw[mnpcod]
+*.log
+*.log.*
+*.tmp
+*.tmp.*
+*.swp
+.DS_Store
+Thumbs.db
+log.txt
+*.sublime-project
+*.sublime-workspace
+.vscode/
+.sass-cache/
+.versions/
+coverage/
+tmp/
+hooks/
+$RECYCLE.BIN/
+.tmp/
+dist/
