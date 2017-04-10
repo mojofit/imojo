@@ -4,24 +4,27 @@ import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
 
-import {MyApp} from "./app.component";
+import {DatabaseService, Sql} from "../providers";
+import {MojoApp} from "./app.component";
 import {HomePage} from "../pages/home/home";
 
 @NgModule({
   declarations: [
-    MyApp,
+    MojoApp,
     HomePage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MojoApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    MojoApp,
     HomePage
   ],
   providers: [
+    Sql,
+    DatabaseService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
