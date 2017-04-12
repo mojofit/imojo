@@ -20,16 +20,13 @@ export class SocketService {
 
   init() {
     this.socket = io(SOCKET_HOST, {autoConnect: false});
+
     this.socket.on("connect", () => {
       console.debug('***Socket Connected***');
     });
 
     this.socket.on("reconnecting", attempt => {
       console.debug('***Socket Reconnecting***', attempt);
-    });
-
-    this.socket.on("reconnect_error", err => {
-      console.debug('***Socket Reconnect Error***', err);
     });
 
     this.socket.on("reconnect_failed", () => {
