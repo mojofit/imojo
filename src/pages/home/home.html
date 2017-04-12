@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <ion-header>
   <ion-navbar>
     <ion-title>
@@ -6,9 +7,24 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+
+  <ion-list no-lines>
+
+    <ion-item *ngFor="let message of messages">
+      <div>
+        <p>{{message}}</p>
+      </div>
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-input [(ngModel)]="chatBox" type="text" placeholder="enter message..."></ion-input>
+    <button (click)="send(chatBox)" style="position:absolute; right: 0; top: 0; margin: 0;">
+      <ion-icon name="chatbubbles"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-footer>
