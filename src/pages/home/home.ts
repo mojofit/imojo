@@ -1,16 +1,17 @@
-import {Component, NgZone} from "@angular/core";
-import {SocketService} from "../../providers";
-import {ChatMessage, MessageType} from "../../providers/model";
+import {Component, NgZone, ViewChild} from "@angular/core";
+import {ChatMessage, MessageType, SocketService} from "../../providers";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  messages: any;
+  @ViewChild('txtChat') txtChat: any;
+  @ViewChild('content') content: any;
+  messages: any[];
   chatBox: string;
 
-  constructor(public zone: NgZone,
+  constructor(public _zone: NgZone,
               public socketService: SocketService) {
     this.messages = [];
     this.chatBox = "";
@@ -26,22 +27,39 @@ export class HomePage {
   }
 
   init() {
-    this.socketService.messages.subscribe((chatMessage: ChatMessage) => {
-      let message = '';
-      if (chatMessage.type === MessageType.MSG_REQ) {
-        message = "From client - " + chatMessage.message;
-      } else if (chatMessage.type === MessageType.MSG_RES) {
-        message = "From server - " + chatMessage.message;
-      }
-      this.zone.run(() => {
-        this.messages.push(message);
-      });
+
+    this.messages.push({
+      type:MessageType.MSG_REQ,
+      message:"hello request"
     });
+
+    this.messages.push({
+      type:MessageType.MSG_RES,
+      message:"hello response"
+    });
+
+
+
+
+    this.socketService.messages.subscribe((chatMessage: ChatMessage) => {
+      this._zone.run(() => {
+        this.messages.push(chatMessage);
+      });
+      this.scrollToBottom();
+    });
+  }
+
+  public sendMessage() {
+    this.txtChat.setFocus();
+    let message = this.txtChat.content;
+    this.send(message);
+    this.txtChat.clearInput();
   }
 
   send(message) {
     this.socketService.newRequest(this.formatMessage(message));
     this.chatBox = '';
+    this.scrollToBottom();
   }
 
   formatMessage(message: string) {
@@ -50,5 +68,13 @@ export class HomePage {
       from: 'annaggarwal@paypal.com',
       message: message
     };
+  }
+
+  scrollToBottom() {
+    this._zone.run(() => {
+      setTimeout(() => {
+        this.content.scrollToBottom(300);
+      });
+    });
   }
 }

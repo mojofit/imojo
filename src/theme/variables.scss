@@ -24,7 +24,20 @@ $colors: (
   secondary: #32db64,
   danger: #f53d3d,
   light: #f4f4f4,
-  dark: #222
+  dark: #222,
+);
+
+$chat: (
+  footer: white,
+  input:#E8EDF1,
+  input-border:#999999
+);
+
+$chat-bubble: (
+  background-left: #E5E5EA,
+  font-left:black,
+  font-right:white,
+  background-right: map-get($colors, primary)
 );
 
 // App iOS Variables

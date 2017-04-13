@@ -7,11 +7,15 @@ import {StatusBar} from "@ionic-native/status-bar";
 import {DatabaseService, SocketService, Sql} from "../providers";
 import {MojoApp} from "./app.component";
 import {HomePage} from "../pages/home/home";
+import {ElasticTextarea} from "../components/elasticTextarea";
+import {ChatBubble} from "../components/chatBubble";
 
 @NgModule({
   declarations: [
     MojoApp,
-    HomePage
+    HomePage,
+    ElasticTextarea,
+    ChatBubble
   ],
   imports: [
     BrowserModule,

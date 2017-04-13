@@ -7,24 +7,28 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content #content>
   <ion-list no-lines>
+    <ion-item *ngFor="let msg of messages">
+      <chat-bubble [chatMessage]="msg"></chat-bubble>
+    </ion-item>
+  </ion-list>
+</ion-content>
 
-    <ion-item *ngFor="let message of messages">
-      <div>
-        <p>{{message}}</p>
+<ion-footer class="chatPageFooter" no-border>
+  <ion-toolbar>
+    <ion-item no-lines>
+      <ion-label style="margin:0px;"></ion-label>
+      <div item-content style="width:100%;">
+        <elastic-textarea #txtChat placeholder="Send a message" lineHeight="20" maxExpand="5"></elastic-textarea>
       </div>
     </ion-item>
-
-  </ion-list>
-
-</ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-input [(ngModel)]="chatBox" type="text" placeholder="enter message..."></ion-input>
-    <button (click)="send(chatBox)" style="position:absolute; right: 0; top: 0; margin: 0;">
-      <ion-icon name="chatbubbles"></ion-icon>
-    </button>
+    <ion-buttons right style="margin-left:10px">
+      <button ion-button icon-only style="margin-top: -15px;"
+              [disabled]="txtChat.content.trim().length<1"
+              (click)="sendMessage()">
+        <ion-icon name="md-send"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

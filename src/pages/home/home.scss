@@ -1,5 +1,26 @@
 page-home {
-  .home {
-    color: #fff !important;
+  ion-label {
+    margin: 0 !important;
+  }
+
+  ion-item {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  ion-item > .item-inner {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .chatPageFooter {
+    .toolbar-background {
+      background: map-get($chat, footer);
+    }
+    .toolbar {
+      padding: 4px 8px !important;
+
+    }
   }
 }
+

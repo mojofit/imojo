@@ -1,6 +1,6 @@
 export class MessageType {
-  static readonly MSG_REQ: string = "message_request";
-  static readonly MSG_RES: string = "message_response"
+  public static readonly MSG_REQ: string = "message_request";
+  public static readonly MSG_RES: string = "message_response"
 }
 
 export interface ChatMessage {
