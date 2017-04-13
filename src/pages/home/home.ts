@@ -1,4 +1,4 @@
-import {Component, NgZone, ViewChild} from "@angular/core";
+import {Component, EventEmitter, NgZone, ViewChild} from "@angular/core";
 import {ChatMessage, MessageType, SocketService} from "../../providers";
 
 @Component({
@@ -10,9 +10,11 @@ export class HomePage {
   @ViewChild('content') content: any;
   messages: any[];
   chatBox: string;
+  btnEmitter:EventEmitter<string>;
 
   constructor(public _zone: NgZone,
               public socketService: SocketService) {
+    this.btnEmitter = new EventEmitter<string>();
     this.messages = [];
     this.chatBox = "";
     this.init();
@@ -50,6 +52,7 @@ export class HomePage {
   }
 
   public sendMessage() {
+    this.btnEmitter.emit("sent clicked");
     this.txtChat.setFocus();
     let message = this.txtChat.content;
     this.send(message);

@@ -64,6 +64,7 @@
     <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640"/>
     <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320"/>
   </platform>
+  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
