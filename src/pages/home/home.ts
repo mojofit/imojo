@@ -1,5 +1,5 @@
 import {Component, EventEmitter, NgZone, ViewChild} from "@angular/core";
-import {ChatMessage, MessageType, SocketService} from "../../providers";
+import {ChatMessage, SocketService, UtilService} from "../../providers";
 
 @Component({
   selector: 'page-home',
@@ -10,7 +10,7 @@ export class HomePage {
   @ViewChild('content') content: any;
   messages: any[];
   chatBox: string;
-  btnEmitter:EventEmitter<string>;
+  btnEmitter: EventEmitter<string>;
 
   constructor(public _zone: NgZone,
               public socketService: SocketService) {
@@ -29,20 +29,6 @@ export class HomePage {
   }
 
   init() {
-
-    this.messages.push({
-      type:MessageType.MSG_REQ,
-      message:"hello request"
-    });
-
-    this.messages.push({
-      type:MessageType.MSG_RES,
-      message:"hello response"
-    });
-
-
-
-
     this.socketService.messages.subscribe((chatMessage: ChatMessage) => {
       this._zone.run(() => {
         this.messages.push(chatMessage);
@@ -60,17 +46,11 @@ export class HomePage {
   }
 
   send(message) {
-    this.socketService.newRequest(this.formatMessage(message));
+    //todo read email from database
+    let from = "annaggarwal@paypal.com";
+    this.socketService.newRequest(UtilService.formatMessageRequest(message, from));
     this.chatBox = '';
     this.scrollToBottom();
-  }
-
-  formatMessage(message: string) {
-    return {
-      type: MessageType.MSG_REQ,
-      from: 'annaggarwal@paypal.com',
-      message: message
-    };
   }
 
   scrollToBottom() {

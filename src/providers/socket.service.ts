@@ -4,6 +4,7 @@ import * as io from "socket.io-client";
 import {ChatMessage, MessageType} from "./model";
 import {SOCKET_HOST} from "./constants";
 import Socket = SocketIOClient.Socket;
+import {UtilService} from "./util.service";
 
 @Injectable()
 export class SocketService {
@@ -46,6 +47,7 @@ export class SocketService {
           message: response
         };
       }
+      chatMessage.epoch = UtilService.getEpoch();
       this.socketObserver.next(chatMessage);
     });
   }
@@ -59,6 +61,7 @@ export class SocketService {
   }
 
   newRequest(chatMessage: ChatMessage) {
+    chatMessage.epoch = UtilService.getEpoch();
     this.socketObserver.next(chatMessage);
     this.socket.emit(MessageType.MSG_REQ, chatMessage);
   }

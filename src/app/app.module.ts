@@ -6,7 +6,7 @@ import {StatusBar} from "@ionic-native/status-bar";
 import {Keyboard} from "@ionic-native/keyboard";
 
 
-import {DatabaseService, SocketService, Sql} from "../providers";
+import {DatabaseService, SocketService, Sql, UtilService} from "../providers";
 import {MojoApp} from "./app.component";
 import {HomePage} from "../pages/home/home";
 import {ElasticTextarea} from "../components/elasticTextarea";
@@ -34,6 +34,7 @@ import {KeyboardAttachDirective} from "../directives";
     Sql,
     DatabaseService,
     SocketService,
+    UtilService,
     StatusBar,
     SplashScreen,
     Keyboard,

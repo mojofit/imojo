@@ -1,8 +1,8 @@
 <div>
   <div class="chat-bubble {{chatMessage.type === messageType.MSG_REQ ? 'right' : 'left'}}">
     <div class="message">{{chatMessage.message}}</div>
-    <div class="message-detail">
-      <span>some time here</span>
+    <div class="message-detail" style="float:right">
+      <span>{{formatEpoch(chatMessage.epoch)}}</span>
     </div>
   </div>
 </div>

@@ -7,6 +7,7 @@ export interface ChatMessage {
   type: MessageType;
   from: string;
   message: any;
+  epoch?:number;
 }
 
 
