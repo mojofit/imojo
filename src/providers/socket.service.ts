@@ -3,8 +3,9 @@ import {Observable} from "rxjs/Observable";
 import * as io from "socket.io-client";
 import {ChatMessage, MessageType} from "./model";
 import {SOCKET_HOST} from "./constants";
-import Socket = SocketIOClient.Socket;
 import {UtilService} from "./util.service";
+import {DatabaseService} from "./database.service";
+import Socket = SocketIOClient.Socket;
 
 @Injectable()
 export class SocketService {
@@ -12,7 +13,7 @@ export class SocketService {
   private socketObserver: any;
   private socket: Socket;
 
-  constructor() {
+  constructor(public databaseService: DatabaseService) {
     this.messages = Observable.create(observer => {
       this.socketObserver = observer;
     });
@@ -48,7 +49,20 @@ export class SocketService {
         };
       }
       chatMessage.epoch = UtilService.getEpoch();
-      this.socketObserver.next(chatMessage);
+
+      this.databaseService.getJson("messages")
+        .then(messages => {
+          if (messages === null) {
+            messages = [];
+          }
+          messages.push(chatMessage);
+          return this.databaseService.setJson("messages", messages);
+        })
+        .then(success => {
+          if (success) {
+            this.socketObserver.next(chatMessage);
+          }
+        });
     });
   }
 
@@ -62,7 +76,19 @@ export class SocketService {
 
   newRequest(chatMessage: ChatMessage) {
     chatMessage.epoch = UtilService.getEpoch();
-    this.socketObserver.next(chatMessage);
-    this.socket.emit(MessageType.MSG_REQ, chatMessage);
+    this.databaseService.getJson("messages")
+      .then(messages => {
+        if (!messages) {
+          messages = [];
+        }
+        messages.push(chatMessage);
+        return this.databaseService.setJson("messages", messages);
+      })
+      .then(success => {
+        if (success) {
+          this.socketObserver.next(chatMessage);
+          this.socket.emit(MessageType.MSG_REQ, chatMessage);
+        }
+      });
   }
 }

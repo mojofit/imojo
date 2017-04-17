@@ -1,5 +1,6 @@
 import {Component, EventEmitter, NgZone, ViewChild} from "@angular/core";
-import {ChatMessage, SocketService, UtilService} from "../../providers";
+import {ChatMessage, DatabaseService, SocketService, UtilService} from "../../providers";
+import * as _ from "lodash";
 
 @Component({
   selector: 'page-home',
@@ -13,6 +14,7 @@ export class HomePage {
   btnEmitter: EventEmitter<string>;
 
   constructor(public _zone: NgZone,
+              public databaseService: DatabaseService,
               public socketService: SocketService) {
     this.btnEmitter = new EventEmitter<string>();
     this.messages = [];
@@ -21,6 +23,13 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
+    this.databaseService.getJson("messages")
+      .then(messages => {
+        if (messages) {
+          this.messages = this.messages.concat(_.sortBy(messages, ['epoch']));
+        }
+        this.scrollToBottom();
+      });
     this.socketService.connect();
   }
 
